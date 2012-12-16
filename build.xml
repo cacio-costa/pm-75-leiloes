@@ -5,6 +5,10 @@
         <classpath path="lib/test/jacocoant.jar"/>
     </taskdef>
 	
+	<target name="clean">
+		<delete dir="${build.dir}"/>	
+	</target>
+	
 	<path id="tests.classpath" path=".">
 		<fileset dir="lib/test">
 			<include name="*.jar" />
@@ -18,7 +22,7 @@
 		</fileset>
 	</path>
 	
-	<target name="compilar">
+	<target name="compilar" depends="clean">
 		<mkdir dir="${build.dir}/classes/"/>
 		<mkdir dir="${build.dir}/classes-teste/"/>
 		<javac destdir="${build.dir}/classes/" srcdir="src/main/" classpathref="libs.classpath" debug="true" encoding="UTF-8" />
@@ -69,22 +73,21 @@
 	<target name="relatorio-jacoco" depends="executar-os-testes">
 		<mkdir dir="${build.dir}/jacoco"/>
 		<mkdir dir="${build.dir}/jacoco/report"/>
-			<jacoco:report>
-				<executiondata>
-					<file name="${basedir}/jacoco.exec"/>
-				</executiondata>
-				<structure name="pm-75-leiloes">
-					 <classfiles>
-				        <fileset dir="${build.dir}"/>
-					</classfiles>
-					<sourcefiles encoding="UTF-8">
-						<fileset dir="src/main" />
-					</sourcefiles>
-				</structure>
-
-				<html destdir="${build.dir}/jacoco/report" />
-			</jacoco:report>
-		</target>
+		<jacoco:report>
+			<executiondata>
+				<file name="${basedir}/jacoco.exec"/>
+			</executiondata>
+			<structure name="pm-75-leiloes">
+				 <classfiles>
+			        <fileset dir="${build.dir}"/>
+				</classfiles>
+				<sourcefiles encoding="UTF-8">
+					<fileset dir="src/main" />
+				</sourcefiles>
+			</structure>
+			<html destdir="${build.dir}/jacoco/report" />
+		</jacoco:report>
+	</target>
 	
 	<property name="apache.tomcat7" value="apache-tomcat-7.0.32"/>
 	
@@ -133,8 +136,4 @@
 		<jar destfile="pm-75-leiloes.jar" basedir="${build.dir}/classes/" />
 	</target>
 	
-	<target name="clean">
-		<delete dir="${build.dir}"/>	
-	</target>
-	
-</project>	
+</project>
