@@ -1,1 +1,1 @@
-Testando build automático com Jenkins ao commitar no repositório.
+Testando build automático com Jenkins ao efetuar commit no repositório.
